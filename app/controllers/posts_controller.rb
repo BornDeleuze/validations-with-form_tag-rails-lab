@@ -8,11 +8,13 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
-
-    @post.update(post_params)
-
-    redirect_to post_path(@post)
+    temp_post = Post.new(post_params)
+    if temp_post.valid?
+      @post= Post.update(post_params)
+      redirect_to post_path(@post)
+    else
+      render :edit
+    end
   end
 
   private
